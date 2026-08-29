@@ -230,13 +230,28 @@ const screens = ['booking-service', 'booking-calendar', 'booking-confirm', 'book
     return []; // domingo fechado
   }
 
+  function getBrazilNow() {
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', hour12: false
+    }).formatToParts(new Date()).reduce((out, p) => (out[p.type] = p.value, out), {});
+    return { date: `${parts.year}-${parts.month}-${parts.day}`, time: `${parts.hour}:${parts.minute}` };
+  }
+
+  function getDateKey(dateObj) {
+    return `${dateObj.getFullYear()}-${String(dateObj.getMonth()+1).padStart(2,'0')}-${String(dateObj.getDate()).padStart(2,'0')}`;
+  }
+
   function getSlotsForDate(dateObj, duration) {
     duration = duration || 1;
     const windows = getWindowsForDow(dateObj.getDay());
     const slots = [];
+    const brazilNow = getBrazilNow();
+    const dateKey = getDateKey(dateObj);
     windows.forEach(([start, end]) => {
       for (let h = start; h + duration <= end; h++) {
-        slots.push(String(h).padStart(2, '0') + ':00');
+        const slot = String(h).padStart(2, '0') + ':00';
+        if (dateKey !== brazilNow.date || slot > brazilNow.time) slots.push(slot);
       }
     });
     return slots;
@@ -251,8 +266,8 @@ const screens = ['booking-service', 'booking-calendar', 'booking-confirm', 'book
 
     const firstDow = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const today = new Date();
-    today.setHours(0,0,0,0);
+    const brazilToday = getBrazilNow().date;
+    const today = new Date(`${brazilToday}T00:00:00`);
 
     for (let i = 0; i < firstDow; i++) {
       const blank = document.createElement('div');
@@ -285,7 +300,7 @@ const screens = ['booking-service', 'booking-calendar', 'booking-confirm', 'book
   }
 
   function changeMonth(delta) {
-    const today = new Date();
+    const today = new Date(`${getBrazilNow().date}T00:00:00`);
     let m = calState.month + delta;
     let y = calState.year;
     if (m < 0) { m = 11; y--; }
@@ -315,18 +330,22 @@ const screens = ['booking-service', 'booking-calendar', 'booking-confirm', 'book
     document.getElementById('timeGrid').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
-  function renderTimeSlots(dateObj) {
+  async function renderTimeSlots(dateObj) {
     const slots = getSlotsForDate(dateObj, state.duration);
     const timeGrid = document.getElementById('timeGrid');
     timeGrid.innerHTML = '';
-    document.getElementById('timeLabel').textContent = slots.length
-      ? 'Horários disponíveis'
-      : 'Sem horários disponíveis neste dia';
+    let booked = [];
+    try {
+      const response = await fetch(`${BOOKING_API_URL.replace(/\/bookings$/, '/availability')}?date=${encodeURIComponent(getDateKey(dateObj))}`);
+      if (response.ok) booked = (await response.json()).booked || [];
+    } catch (error) { console.error('Falha ao consultar disponibilidade:', error); }
+    document.getElementById('timeLabel').textContent = slots.length ? 'Horários disponíveis' : 'Sem horários disponíveis neste dia';
     slots.forEach(t => {
       const el = document.createElement('div');
-      el.className = 'time-slot';
-      el.textContent = t;
-      el.onclick = () => selectTime(el, t);
+      const unavailable = booked.includes(t);
+      el.className = unavailable ? 'time-slot disabled' : 'time-slot';
+      el.textContent = unavailable ? `${t} · reservado` : t;
+      if (!unavailable) el.onclick = () => selectTime(el, t);
       timeGrid.appendChild(el);
     });
   }
@@ -442,7 +461,7 @@ const screens = ['booking-service', 'booking-calendar', 'booking-confirm', 'book
   // init
   document.getElementById('continueBtn1').style.opacity = '0.4';
   document.getElementById('continueBtn2').style.opacity = '0.4';
-  const todayInit = new Date();
+  const todayInit = new Date(`${getBrazilNow().date}T00:00:00`);
   calState = { year: todayInit.getFullYear(), month: todayInit.getMonth() };
   renderCalendar();
   renderDevNav();
