@@ -1290,3 +1290,32 @@ html{ scroll-behavior:smooth; }
   }
   .dev-nav span.current { opacity: 1; color: var(--gold); }
   .app-wrap { padding-top: 40px; }
+
+  .customer-fields {
+    display: grid;
+    gap: 8px;
+    margin: 0 32px 28px;
+    font-family: var(--ui-font), sans-serif;
+  }
+  .customer-fields label {
+    color: var(--text-soft);
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+  .customer-fields input {
+    width: 100%;
+    border: 1px solid rgba(0,0,0,.2);
+    background: #fff;
+    color: var(--dark);
+    padding: 14px;
+    font: inherit;
+    font-size: 15px;
+    outline: none;
+  }
+  .customer-fields input:focus { border-color: var(--gold); }
+  @media (min-width: 900px) {
+    .customer-fields { margin-left: 72px; margin-right: 72px; grid-template-columns: 1fr 1fr; column-gap: 20px; }
+    .customer-fields label { margin-top: 0; }
+  }

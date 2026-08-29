@@ -394,8 +394,16 @@ const screens = ['booking-service', 'booking-calendar', 'booking-confirm', 'book
       return;
     }
 
+    const customerName = document.getElementById('customerName').value.trim();
+    const customerPhone = document.getElementById('customerPhone').value.trim();
+    if (!customerName || !customerPhone) {
+      alert('Informe seu nome e WhatsApp para confirmar o agendamento.');
+      return;
+    }
     const payload = {
       service: state.service,
+      customerName,
+      customerPhone,
       price: state.price,
       duration: state.duration,
       date: state.dateObj.toISOString().slice(0, 10),
