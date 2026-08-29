@@ -1,0 +1,17 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# AWS / secrets
+.aws/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Build output
+node_modules/
+dist/
+build/

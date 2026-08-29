@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Agendar — Alison Estevam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Josefin+Sans:wght@300;400;500;600;700&family=Baskervville:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css" />
+<style>
+  /* Forca o fluxo a ser visivel e nao fixo na pagina dedicada */
+  #booking-flow-root { display: block !important; position: static !important; overflow-y: visible !important; inset: auto !important; z-index: auto !important; }
+  body { background: #2E2E2B; } /* --carvao */
+</style>
+</head>
+<body>
+<div id="booking-flow-root">
+
+<div class="dev-nav" id="devNav"></div>
+
+<div class="app-wrap">
+
+  <!-- ============ SCREEN 2: SERVICE SELECTION ============ -->
+  <div class="screen" id="screen-booking-service">
+    <div class="back-link" onclick="closeBookingFlow()">← Voltar ao início</div>
+    <div class="booking-header">
+      <div class="eyebrow">Agendamento</div>
+      <h2 class="booking-title">Escolha o serviço</h2>
+      <p class="booking-subtitle">Selecione o que você deseja agendar hoje.</p>
+    </div>
+
+    <div class="step-indicator">
+      <div class="step-dot done"></div>
+      <div class="step-dot"></div>
+      <div class="step-dot"></div>
+    </div>
+
+    <div class="service-list">
+      <div class="bk-card" data-service="Cabelo" data-price="R$ 70" onclick="selectService(this)">
+        <div>
+          <div class="name">Cabelo</div>
+          <div class="meta">Inclui lavagem e finalização</div>
+        </div>
+        <div class="price">R$ 70</div>
+      </div>
+
+      <div class="bk-card" data-service="Barba" data-price="R$ 70" onclick="selectService(this)">
+        <div>
+          <div class="name">Barba</div>
+          <div class="meta">Modelagem e acabamento com navalha</div>
+        </div>
+        <div class="price">R$ 70</div>
+      </div>
+
+      <div class="bk-card" data-service="Cabelo + Barba" data-price="R$ 120" data-duration="2" onclick="selectService(this)">
+        <div>
+          <div class="name">Cabelo + Barba</div>
+          <div class="meta">Corte completo + barba · Duração de 2h</div>
+        </div>
+        <div class="price">R$ 120</div>
+      </div>
+
+      <div class="bk-card" data-service="Horário Exclusivo" data-price="R$ 110" data-whatsapp-only="true" onclick="selectService(this)">
+        <div>
+          <div class="name">Horário <span style="color: var(--marrom);">Exclusivo</span></div>
+          <div class="meta">Fora do horário convencional<br>Agendamento pelo WhatsApp</div>
+        </div>
+        <div class="price">R$ 110</div>
+      </div>
+
+    </div>
+
+    <div class="continue-bar">
+      <button class="btn-primary-gold" style="width:100%; max-width:100%;" id="continueBtn1" onclick="openComplementos()" disabled>
+        Continuar
+      </button>
+    </div>
+  </div>
+
+  <!-- ============ MODAL: COMPLEMENTOS (sobrepõe a tela de Serviço) ============ -->
+  <div class="modal-backdrop" id="complementosBackdrop">
+    <div class="modal-box">
+      <div class="modal-close" onclick="closeComplementos()">✕</div>
+      <div class="modal-optional-tag">Opcional</div>
+      <h2 class="booking-title">Complementos</h2>
+      <p class="booking-subtitle">Adicione um cuidado extra ao seu horário, se quiser — não é obrigatório.</p>
+
+      <div class="service-list" id="complementosList" style="padding:0;"></div>
+
+      <div class="continue-bar" style="padding:24px 0 0;">
+        <button class="btn-primary-gold" style="width:100%; max-width:100%;" id="continueComplementosBtn" onclick="closeComplementos(); goTo('booking-calendar');">
+          Continuar sem complementos
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SCREEN 3: CALENDAR + TIME ============ -->
+  <div class="screen" id="screen-booking-calendar">
+    <div class="back-link" onclick="goTo('booking-service')">← Trocar serviço</div>
+    <div class="booking-header">
+      <div class="eyebrow">Agendamento</div>
+      <h2 class="booking-title">Escolha data e horário</h2>
+      <p class="booking-subtitle" id="serviceConfirmText">Horários disponíveis para o serviço selecionado.</p>
+    </div>
+
+    <div class="step-indicator">
+      <div class="step-dot done"></div>
+      <div class="step-dot done"></div>
+      <div class="step-dot"></div>
+    </div>
+
+    <div class="calendar-wrap">
+      <div class="cal-month">
+        <div class="label" id="calLabel">—</div>
+        <div class="arrows">
+          <span id="prevMonthBtn" onclick="changeMonth(-1)">‹</span>
+          <span id="nextMonthBtn" onclick="changeMonth(1)">›</span>
+        </div>
+      </div>
+      <div class="cal-grid" id="calGrid">
+        <div class="cal-dow">D</div><div class="cal-dow">S</div><div class="cal-dow">T</div><div class="cal-dow">Q</div><div class="cal-dow">Q</div><div class="cal-dow">S</div><div class="cal-dow">S</div>
+      </div>
+
+      <div class="time-label" id="timeLabel">Selecione um dia para ver os horários</div>
+      <div class="time-grid" id="timeGrid"></div>
+    </div>
+
+    <div class="continue-bar">
+      <button class="btn-primary-gold" style="width:100%; max-width:100%;" id="continueBtn2" onclick="goTo('booking-confirm')" disabled>
+        Continuar
+      </button>
+    </div>
+  </div>
+
+  <!-- ============ SCREEN 4: SUMMARY + CONFIRM ============ -->
+  <div class="screen" id="screen-booking-confirm">
+    <div class="back-link" onclick="goTo('booking-calendar')">← Ajustar data/horário</div>
+    <div class="booking-header">
+      <div class="eyebrow">Agendamento</div>
+      <h2 class="booking-title">Confirme seu horário</h2>
+      <p class="booking-subtitle">Revise os detalhes antes de confirmar.</p>
+    </div>
+
+    <div class="step-indicator">
+      <div class="step-dot done"></div>
+      <div class="step-dot done"></div>
+      <div class="step-dot done"></div>
+    </div>
+
+    <div class="summary-box">
+      <div class="summary-row"><div class="label">Serviço</div><div class="value" id="sumService">—</div></div>
+      <div class="summary-row stack"><div class="label">Complementos</div><div class="value" id="sumComplementos">—</div></div>
+      <div class="summary-row"><div class="label">Data</div><div class="value" id="sumDate">—</div></div>
+      <div class="summary-row"><div class="label">Horário</div><div class="value" id="sumTime">—</div></div>
+      <div class="summary-row"><div class="label">Valor</div><div class="value" id="sumPrice">—</div></div>
+    </div>
+
+    <div class="continue-bar">
+      <button class="btn-primary-gold" style="width:100%; max-width:100%;" onclick="goTo('booking-success')">
+        Confirmar agendamento
+      </button>
+    </div>
+  </div>
+
+  <!-- ============ SCREEN 5: SUCCESS ============ -->
+  <div class="screen" id="screen-booking-success">
+    <div class="confirm-screen">
+      <div class="confirm-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </div>
+      <h2>Agendamento confirmado</h2>
+      <p>Você vai receber a confirmação pelo WhatsApp informado. Até breve.</p>
+      <button class="btn-primary-gold" onclick="resetAndGoHero()">Voltar ao início</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Floating WhatsApp, visible across all screens -->
+<div class="floating-wa" onclick="alert('Abriria o WhatsApp diretamente')">
+  <svg viewBox="0 0 32 32" fill="white"><path d="M16.001 3C9.096 3 3.5 8.596 3.5 15.5c0 2.393.669 4.63 1.828 6.537L3 29l7.16-2.279A12.44 12.44 0 0 0 16.001 28C22.906 28 28.5 22.404 28.5 15.5S22.906 3 16.001 3zm7.06 17.606c-.302.851-1.497 1.559-2.457 1.764-.653.139-1.507.25-4.383-.941-3.68-1.525-6.048-5.263-6.233-5.508-.177-.245-1.487-1.981-1.487-3.779 0-1.798.943-2.68 1.278-3.049.302-.334.66-.417.88-.417.221 0 .441.002.634.011.204.01.478-.077.747.57.28.673.951 2.323 1.034 2.492.083.169.139.368.028.599-.11.23-.166.373-.331.573-.166.2-.348.446-.497.599-.166.169-.339.352-.145.688.194.336.862 1.423 1.851 2.304 1.271 1.133 2.343 1.484 2.679 1.653.336.169.532.14.728-.086.194-.226.833-.972 1.056-1.305.222-.334.443-.278.746-.169.303.109 1.928.909 2.259 1.074.331.166.55.246.632.383.083.14.083.809-.219 1.639z"/></svg>
+</div>
+
+</div><!-- /#booking-flow-root -->
+
+<script src="../js/script.js"></script>
+<script>
+  // Pre-selecao de servico via query string
+  (function(){
+    var params = new URLSearchParams(window.location.search);
+    var service = params.get('service');
+    function init(){
+      var root = document.getElementById('booking-flow-root');
+      if(root) root.style.display = 'block';
+      if(service && typeof openBookingFlow === 'function'){ openBookingFlow(service); }
+      else if(typeof goTo === 'function'){ goTo('booking-service'); }
+    }
+    if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', init); }
+    else { init(); }
+  })();
+</script>
+</body>
+</html>
