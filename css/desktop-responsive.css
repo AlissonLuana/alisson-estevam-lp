@@ -1,3 +1,94 @@
+/* Desktop art direction: horizontal hero, grids and readable content widths. */
+@media (min-width: 900px) {
+  body { align-items: stretch; }
+  .site-navbar {
+    height: 76px;
+    padding: 0 clamp(28px, 5vw, 80px);
+  }
+  .site-navbar__link { font-size: 14px; }
+  .site-navbar__menu-text { left: clamp(28px, 5vw, 80px); }
+  .site-navbar__cta { right: clamp(28px, 5vw, 80px); }
+
+  .hero {
+    width: min(1180px, calc(100% - 64px));
+    max-width: none;
+    height: min(680px, calc(100vh - 110px));
+    min-height: 560px;
+    aspect-ratio: auto;
+    margin: 76px auto 0;
+    overflow: hidden;
+  }
+  .hero__photo { left: 46%; width: 54%; opacity: .42; }
+  .hero__title {
+    left: 7%; top: 23%; width: 45%; height: auto;
+    font-size: clamp(64px, 8vw, 116px); line-height: .86;
+    text-align: left; letter-spacing: .08em;
+  }
+  .hero__cta-primary { left: 7%; top: 67%; width: 230px; height: 56px; font-size: 13px; }
+  .hero__cta-secondary { left: calc(7% + 250px); top: 67%; width: 180px; height: 56px; font-size: 11px; }
+
+  .portfolio, .services, .cuidados {
+    width: min(1180px, calc(100% - 64px));
+    max-width: none;
+    margin: 0 auto;
+    aspect-ratio: auto;
+    overflow: visible;
+  }
+  .portfolio { padding: 90px 0 110px; }
+  .portfolio__eyebrow, .portfolio__line, .portfolio__title, .portfolio__subtitle { position: static; }
+  .portfolio__eyebrow { width: auto; margin: 0 0 18px; font-size: 13px; }
+  .portfolio__line { width: 100%; margin: 0 0 38px; }
+  .portfolio__title { width: auto; margin: 0 0 16px; font-size: clamp(42px, 5vw, 70px); line-height: .9; }
+  .portfolio__subtitle { width: auto; max-width: 420px; margin: 0 0 50px; font-size: 15px; }
+  .portfolio__photo { position: relative; inset: auto !important; width: auto; height: clamp(220px, 24vw, 320px); }
+  .portfolio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .portfolio__eyebrow, .portfolio__line, .portfolio__title, .portfolio__subtitle { grid-column: 1 / -1; }
+
+  .services { padding: 90px 0 110px; }
+  .services__eyebrow, .services__line, .services__title, .services__subtitle { margin-left: 0; width: auto; }
+  .services__line { margin-top: 18px; }
+  .services__title { margin-top: 38px; font-size: clamp(42px, 5vw, 70px); line-height: .9; }
+  .services__subtitle { margin-top: 18px; font-size: 15px; }
+  .services__track { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; overflow: visible; padding: 0; margin-top: 50px; }
+  .service-card { min-width: 0; width: auto; height: 480px; flex: none; }
+  .service-card__photo { height: 280px; }
+  .service-card__body { top: 280px; height: 200px; }
+  .service-card__name, .service-card__desc, .service-card__price, .service-card__cta { position: absolute; }
+  .service-card__name { top: 302px; left: 18px; width: calc(100% - 36px); font-size: 20px; }
+  .service-card__desc { top: 350px !important; left: 18px; width: calc(100% - 36px); font-size: 12px; }
+  .service-card__price { top: 438px; left: 18px; font-size: 20px; }
+  .service-card__cta { top: 430px; left: auto; right: 18px; width: 92px; height: 38px; font-size: 10px; }
+  .services__dots { display: none; }
+
+  .cuidados { padding: 90px 0 110px; min-height: 0; }
+  .cuidados__reveal-group { display: contents; }
+  .cuidados__eyebrow, .cuidados__line, .cuidados__title, .cuidados__subtitle, .cuidado, .cuidados__cta-final { position: static; }
+  .cuidados__eyebrow { font-size: 13px; }
+  .cuidados__title { width: auto; margin: 38px 0 16px; font-size: clamp(42px, 5vw, 70px); line-height: .9; }
+  .cuidados__subtitle { width: auto; margin-bottom: 50px; font-size: 15px; }
+  .cuidados__line { width: 100%; margin: 18px 0; }
+  .cuidado { display: grid; grid-template-columns: 220px 1fr; gap: 24px; min-height: 220px; align-items: center; }
+  .cuidado__photo { position: static; width: 220px; height: 180px; grid-row: 1 / span 3; }
+  .cuidado__name, .cuidado__desc, .cuidado__disponivel, .cuidado__underline { position: static; width: auto; }
+  .cuidado__name { font-size: 25px; }
+  .cuidado__desc { font-size: 14px; }
+  .cuidado__disponivel { font-size: 12px; }
+  .cuidado__underline { width: 100%; }
+}
+
+@media (max-width: 899px) {
+  .hero__cta-primary, .hero__cta-secondary { min-height: 48px; }
+  .services__track { scrollbar-width: thin; }
+  .booking-header, .service-list, .calendar-wrap, .continue-bar { max-width: 720px; margin-left: auto; margin-right: auto; }
+}
+
+@media (min-width: 700px) {
+  .screen { max-width: 760px; }
+  .service-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .continue-bar { max-width: 760px; }
+  .modal-box { max-width: 560px; }
+}
+
 
 @media (min-width: 900px) {
   /* Booking flow: comfortable desktop scale (the mobile flow remains unchanged). */
