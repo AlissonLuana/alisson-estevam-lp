@@ -342,7 +342,8 @@ const screens = ['booking-service', 'booking-calendar', 'booking-confirm', 'book
   async function renderTimeSlots(dateObj) {
     const slots = getSlotsForDate(dateObj, state.duration);
     const timeGrid = document.getElementById('timeGrid');
-    timeGrid.innerHTML = '';
+    timeGrid.innerHTML = '<div class="availability-loading" role="status" aria-live="polite"><span class="availability-spinner"></span><span>Carregando horários...</span></div>';
+    document.getElementById('timeLabel').textContent = 'Consultando disponibilidade';
     let booked = [];
     try {
       const response = await fetch(`${BOOKING_API_URL.replace(/\/bookings$/, '/availability')}?date=${encodeURIComponent(getDateKey(dateObj))}`);

@@ -1250,6 +1250,27 @@ html{ scroll-behavior:smooth; }
     background: #fff;
     font-family: var(--ui-font), sans-serif;
   }
+  .availability-loading {
+    grid-column: 1 / -1;
+    min-height: 86px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: var(--gold);
+    font-family: var(--ui-font), sans-serif;
+    font-size: 12px;
+    letter-spacing: .5px;
+  }
+  .availability-spinner {
+    width: 22px;
+    height: 22px;
+    border: 2px solid rgba(203,163,57,.25);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: availability-spin .8s linear infinite;
+  }
+  @keyframes availability-spin { to { transform: rotate(360deg); } }
   .time-slot:hover { border-color: var(--gold); }
   .time-slot.selected {
     background: var(--gold);
