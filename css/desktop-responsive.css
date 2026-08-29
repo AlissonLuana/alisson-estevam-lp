@@ -56,8 +56,11 @@
   .service-card__name, .service-card__desc, .service-card__price, .service-card__cta { position: absolute; }
   .service-card__name { top: 302px; left: 18px; width: calc(100% - 36px); font-size: 20px; }
   .service-card__desc { top: 350px !important; left: 18px; width: calc(100% - 36px); font-size: 12px; }
-  .service-card__price { top: 438px; left: 18px; font-size: 20px; }
+  .service-card__price { top: 430px; left: 18px; height: 38px; display: flex; align-items: center; font-size: 20px; }
   .service-card__cta { top: 430px; left: auto; right: 18px; width: 92px; height: 38px; font-size: 10px; }
+
+  /* O botão final acompanha exatamente a largura disponível para os horários. */
+  .confirm-booking-btn { width: 100%; max-width: none; }
   .services__dots { display: none; }
 
   .cuidados { padding: 90px 0 110px; min-height: 0; }
