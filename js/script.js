@@ -288,7 +288,8 @@ const screens = ['booking-service', 'booking-calendar', 'booking-confirm', 'book
       const dow = dateObj.getDay();
       const cell = document.createElement('div');
       cell.textContent = d;
-      const isPast = dateObj < today;
+      // O atendimento começa a partir de amanhã; o dia atual não é exibido como disponível.
+      const isPast = dateObj <= today;
       const isSunday = dow === 0;
       if (isPast || isSunday) {
         cell.className = 'cal-day disabled';
@@ -347,13 +348,14 @@ const screens = ['booking-service', 'booking-calendar', 'booking-confirm', 'book
       const response = await fetch(`${BOOKING_API_URL.replace(/\/bookings$/, '/availability')}?date=${encodeURIComponent(getDateKey(dateObj))}`);
       if (response.ok) booked = (await response.json()).booked || [];
     } catch (error) { console.error('Falha ao consultar disponibilidade:', error); }
-    document.getElementById('timeLabel').textContent = slots.length ? 'Horários disponíveis' : 'Sem horários disponíveis neste dia';
-    slots.forEach(t => {
+    // Horários reservados não são exibidos para o cliente.
+    const availableSlots = slots.filter(t => !booked.includes(t));
+    document.getElementById('timeLabel').textContent = availableSlots.length ? 'Horários disponíveis' : 'Sem horários disponíveis neste dia';
+    availableSlots.forEach(t => {
       const el = document.createElement('div');
-      const unavailable = booked.includes(t);
-      el.className = unavailable ? 'time-slot disabled' : 'time-slot';
-      el.textContent = unavailable ? `${t} · reservado` : t;
-      if (!unavailable) el.onclick = () => selectTime(el, t);
+      el.className = 'time-slot';
+      el.textContent = t;
+      el.onclick = () => selectTime(el, t);
       timeGrid.appendChild(el);
     });
   }
