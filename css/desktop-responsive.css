@@ -52,7 +52,7 @@
   .services__track { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; overflow: visible; padding: 0; margin-top: 50px; }
   .service-card { min-width: 0; width: auto; height: 480px; flex: none; }
   .service-card__photo { height: 280px; }
-  .service-card__body { top: 280px; height: 200px; }
+  .service-card__body { top: 280px; height: 215px; }
   .service-card__name, .service-card__desc, .service-card__price, .service-card__cta { position: absolute; }
   .service-card__name { top: 302px; left: 18px; width: calc(100% - 36px); font-size: 20px; }
   .service-card__desc { top: 350px !important; left: 18px; width: calc(100% - 36px); font-size: 12px; }
