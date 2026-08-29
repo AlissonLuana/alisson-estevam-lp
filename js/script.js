@@ -446,7 +446,12 @@ const screens = ['booking-service', 'booking-calendar', 'booking-confirm', 'book
     document.getElementById('continueBtn2').disabled = true;
     document.getElementById('continueBtn2').style.opacity = '0.4';
     renderCalendar();
-    closeBookingFlow();
+    // Esta página é o fluxo standalone; voltar ao início precisa retornar à LP.
+    if (window.location.pathname.includes('/pages/')) {
+      window.location.href = '../index.html';
+    } else {
+      closeBookingFlow();
+    }
   }
 
   function openBookingFlow(preselectService) {
