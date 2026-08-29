@@ -83,6 +83,69 @@ html{ scroll-behavior:smooth; }
     outline-offset:2px;
   }
 
+  /* ================= MENU LATERAL ================= */
+  .side-menu{
+    position:fixed;
+    top:0;
+    left:0;
+    width:min(82vw, 360px);
+    height:100vh;
+    padding:34px 30px;
+    background:var(--creme);
+    color:var(--carvao);
+    transform:translateX(-100%);
+    transition:transform .3s ease;
+    z-index:1200;
+    box-shadow:8px 0 30px rgba(0,0,0,.2);
+  }
+  .side-menu.is-open{ transform:translateX(0); }
+  .side-menu__close{
+    position:absolute;
+    top:18px;
+    right:22px;
+    border:0;
+    background:none;
+    color:var(--carvao);
+    font-size:32px;
+    line-height:1;
+    cursor:pointer;
+  }
+  .side-menu__eyebrow{
+    margin-top:48px;
+    color:var(--dourado);
+    font:500 12px 'Josefin Sans',sans-serif;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+  }
+  .side-menu__nav{ margin-top:34px; }
+  .side-menu__module{
+    padding-bottom:16px;
+    border-bottom:1px solid rgba(46,46,43,.2);
+    font:500 28px 'EB Garamond',serif;
+  }
+  .side-menu__item{
+    display:block;
+    width:100%;
+    padding:18px 0;
+    border:0;
+    border-bottom:1px solid rgba(46,46,43,.12);
+    background:none;
+    color:var(--carvao);
+    text-align:left;
+    font:400 17px 'Josefin Sans',sans-serif;
+    cursor:default;
+  }
+  .side-menu-backdrop{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .3s ease;
+    z-index:1100;
+  }
+  .side-menu-backdrop.is-visible{ opacity:1; pointer-events:auto; }
+
   /* ================= HERO ================= */
   /* Frame de referência: 440 de largura (pontos lógicos do iPhone 16 Pro
      Max). Todo o posicionamento interno é feito em % desse frame, para

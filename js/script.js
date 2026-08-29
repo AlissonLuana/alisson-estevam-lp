@@ -20,6 +20,15 @@ const track = document.getElementById('servicesTrack');
     });
   });
 
+function toggleSideMenu(){
+  const menu = document.getElementById('sideMenu');
+  const backdrop = document.getElementById('sideMenuBackdrop');
+  const isOpen = menu.classList.toggle('is-open');
+  backdrop.classList.toggle('is-visible', isOpen);
+  menu.setAttribute('aria-hidden', String(!isOpen));
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+
 /* ---- Script Block ---- */
 
 function alignCuidadosUnderlines(){

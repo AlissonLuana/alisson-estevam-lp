@@ -15,10 +15,21 @@
 <body>
 
 <header class="site-navbar">
-  <button class="site-navbar__link site-navbar__menu-text" aria-label="Abrir menu">MENU</button>
+  <button class="site-navbar__link site-navbar__menu-text" type="button" onclick="toggleSideMenu()" aria-label="Abrir menu">MENU</button>
   <div class="site-navbar__link site-navbar__brand" aria-label="Alison Estevam">Alison Estevam</div>
   <a href="pages/agendar.html" class="site-navbar__link site-navbar__cta" >Agendar</a>
 </header>
+
+<aside class="side-menu" id="sideMenu" aria-label="Menu principal" aria-hidden="true">
+  <button class="side-menu__close" type="button" onclick="toggleSideMenu()" aria-label="Fechar menu">×</button>
+  <div class="side-menu__eyebrow">Menu</div>
+  <nav class="side-menu__nav">
+    <div class="side-menu__module">Perfil</div>
+    <button type="button" class="side-menu__item">Sobre mim</button>
+    <button type="button" class="side-menu__item">Redes sociais</button>
+  </nav>
+</aside>
+<div class="side-menu-backdrop" id="sideMenuBackdrop" onclick="toggleSideMenu()"></div>
 
 <section class="hero" aria-label="Abertura do site — Alison Estevam">
 
