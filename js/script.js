@@ -77,7 +77,7 @@ const screens = ['booking-service', 'booking-calendar', 'booking-confirm', 'book
 
   const MONTH_NAMES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 
-  let state = { service: null, price: null, dateObj: null, time: null, duration: 1, complementos: [] };
+  let state = { service: null, price: null, dateObj: null, time: null, duration: 1, complementos: [], confirmed: false };
   let calState = { year: null, month: null };
 
   function renderDevNav() {
@@ -91,6 +91,18 @@ const screens = ['booking-service', 'booking-calendar', 'booking-confirm', 'book
   }
 
   function goTo(screenId) {
+    const currentId = getCurrent();
+    const currentIndex = screens.indexOf(currentId);
+    const targetIndex = screens.indexOf(screenId);
+    if (targetIndex < 0) return;
+
+    // Não permite pular etapas: cada avanço exige os dados da etapa anterior.
+    if (targetIndex > currentIndex) {
+      if (screenId === 'booking-calendar' && !state.service) return;
+      if (screenId === 'booking-confirm' && (!state.service || !state.dateObj || !state.time)) return;
+      if (screenId === 'booking-success' && !state.confirmed) return;
+    }
+
     screens.forEach(s => document.getElementById('screen-'+s).classList.remove('active'));
     document.getElementById('screen-'+screenId).classList.add('active');
     window.scrollTo(0,0);
@@ -151,6 +163,7 @@ const screens = ['booking-service', 'booking-calendar', 'booking-confirm', 'book
   }
 
   function openComplementos() {
+    if (!state.service) return;
     renderComplementos();
     updateComplementosBtnLabel();
     document.getElementById('complementosBackdrop').classList.add('active');
@@ -353,8 +366,47 @@ const screens = ['booking-service', 'booking-calendar', 'booking-confirm', 'book
   });
   flowScreenObserver.observe(document.body, { attributes: true, subtree: true, attributeFilter: ['class'] });
 
+  // Endpoint HTTP API Gateway/Lambda. Será preenchido após a infraestrutura AWS ser criada.
+  const BOOKING_API_URL = window.BOOKING_API_URL || '';
+
+  async function confirmBooking() {
+    if (!state.service || !state.dateObj || !state.time) return;
+    if (!BOOKING_API_URL) {
+      alert('O gateway de agendamento ainda não foi configurado.');
+      return;
+    }
+
+    const payload = {
+      service: state.service,
+      price: state.price,
+      duration: state.duration,
+      date: state.dateObj.toISOString().slice(0, 10),
+      time: state.time,
+      complementos: state.complementos.map(id => {
+        const item = COMPLEMENTS.find(c => c.id === id);
+        return item ? { id: item.id, name: item.name, price: item.price } : null;
+      }).filter(Boolean),
+      total: parseInt(state.price.replace(/\\D/g, ''), 10) + complementsTotal(),
+      createdAt: new Date().toISOString()
+    };
+
+    try {
+      const response = await fetch(BOOKING_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!response.ok) throw new Error('gateway returned ' + response.status);
+      state.confirmed = true;
+      goTo('booking-success');
+    } catch (error) {
+      console.error('Falha ao enviar agendamento:', error);
+      alert('Não foi possível enviar o agendamento. Tente novamente.');
+    }
+  }
+
   function resetAndGoHero() {
-    state = { service: null, price: null, dateObj: null, time: null, duration: 1, complementos: [] };
+    state = { service: null, price: null, dateObj: null, time: null, duration: 1, complementos: [], confirmed: false };
     const today = new Date();
     calState = { year: today.getFullYear(), month: today.getMonth() };
     document.querySelectorAll('.bk-card').forEach(c => c.classList.remove('selected'));
