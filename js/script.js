@@ -82,8 +82,7 @@ const screens = ['booking-service', 'booking-calendar', 'booking-confirm', 'book
 
   function renderDevNav() {
     const nav = document.getElementById('devNav');
-    nav.innerHTML = screens.map(s => `<span class="${getCurrent()===s?'current':''}" onclick="goTo('${s}')">${labels[s]}</span>`).join('')
-      + `<span onclick="openComplementos()">Modal Complementos</span>`;
+    nav.innerHTML = screens.map(s => `<span class="${getCurrent()===s?'current':''}" onclick="goTo('${s}')">${labels[s]}</span>`).join('');
   }
 
   function getCurrent() {
