@@ -367,7 +367,7 @@ const screens = ['booking-service', 'booking-calendar', 'booking-confirm', 'book
   flowScreenObserver.observe(document.body, { attributes: true, subtree: true, attributeFilter: ['class'] });
 
   // Endpoint HTTP API Gateway/Lambda. Será preenchido após a infraestrutura AWS ser criada.
-  const BOOKING_API_URL = window.BOOKING_API_URL || '';
+  const BOOKING_API_URL = window.BOOKING_API_URL || 'https://qmflo59tuj.execute-api.us-east-1.amazonaws.com/bookings';
 
   async function confirmBooking() {
     if (!state.service || !state.dateObj || !state.time) return;
