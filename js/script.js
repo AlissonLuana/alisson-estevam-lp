@@ -115,6 +115,7 @@ const screens = ['booking-service', 'booking-calendar', 'booking-confirm', 'book
     document.getElementById('screen-'+screenId).classList.add('active');
     window.scrollTo(0,0);
     renderDevNav();
+    if (screenId === 'booking-calendar' && !state.dateObj) autoSelectFirstAvailableDay();
   }
 
   function selectService(el) {
@@ -288,6 +289,7 @@ const screens = ['booking-service', 'booking-calendar', 'booking-confirm', 'book
       const dow = dateObj.getDay();
       const cell = document.createElement('div');
       cell.textContent = d;
+      cell.dataset.date = getDateKey(dateObj);
       // O atendimento começa a partir de amanhã; o dia atual não é exibido como disponível.
       const isPast = dateObj <= today;
       const isSunday = dow === 0;
@@ -329,6 +331,34 @@ const screens = ['booking-service', 'booking-calendar', 'booking-confirm', 'book
     document.getElementById('continueBtn2').style.opacity = '0.4';
   }
 
+  async function autoSelectFirstAvailableDay() {
+    const start = new Date(`${getBrazilNow().date}T00:00:00`);
+    for (let offset = 1; offset <= 62; offset++) {
+      const dateObj = new Date(start);
+      dateObj.setDate(start.getDate() + offset);
+      if (dateObj.getDay() === 0) continue;
+      const slots = getSlotsForDate(dateObj, state.duration);
+      try {
+        const response = await fetch(`${BOOKING_API_URL.replace(/\/bookings$/, '/availability')}?date=${encodeURIComponent(getDateKey(dateObj))}`);
+        const booked = response.ok ? ((await response.json()).booked || []) : [];
+        if (slots.some(slot => !booked.includes(slot))) {
+          let cell = document.querySelector(`.cal-day.available[data-date="${getDateKey(dateObj)}"]`);
+          if (!cell) {
+            calState = { year: dateObj.getFullYear(), month: dateObj.getMonth() };
+            renderCalendar();
+            cell = document.querySelector(`.cal-day.available[data-date="${getDateKey(dateObj)}"]`);
+          }
+          if (cell) selectDay(cell, dateObj);
+          return;
+        }
+      } catch (error) {
+        console.error('Falha ao localizar o primeiro dia disponível:', error);
+        return;
+      }
+    }
+    document.getElementById('timeLabel').textContent = 'Nenhum horário disponível nos próximos dias';
+  }
+
   function selectDay(el, dateObj) {
     document.querySelectorAll('.cal-day.available').forEach(d => d.classList.remove('selected'));
     el.classList.add('selected');
@@ -349,6 +379,8 @@ const screens = ['booking-service', 'booking-calendar', 'booking-confirm', 'book
       const response = await fetch(`${BOOKING_API_URL.replace(/\/bookings$/, '/availability')}?date=${encodeURIComponent(getDateKey(dateObj))}`);
       if (response.ok) booked = (await response.json()).booked || [];
     } catch (error) { console.error('Falha ao consultar disponibilidade:', error); }
+    // Remove o loading antes de inserir os horários reais.
+    timeGrid.innerHTML = '';
     // Horários reservados não são exibidos para o cliente.
     const availableSlots = slots.filter(t => !booked.includes(t));
     document.getElementById('timeLabel').textContent = availableSlots.length ? 'Horários disponíveis' : 'Sem horários disponíveis neste dia';
