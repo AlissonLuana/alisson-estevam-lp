@@ -386,7 +386,7 @@ const screens = ['booking-service', 'booking-calendar', 'booking-confirm', 'book
         const item = COMPLEMENTS.find(c => c.id === id);
         return item ? { id: item.id, name: item.name, price: item.price } : null;
       }).filter(Boolean),
-      total: parseInt(state.price.replace(/\\D/g, ''), 10) + complementsTotal(),
+      total: parseInt(state.price.replace(/\D/g, ''), 10) + complementsTotal(),
       createdAt: new Date().toISOString()
     };
 
