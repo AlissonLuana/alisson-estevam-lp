@@ -88,7 +88,7 @@
 @media (min-width: 700px) {
   .screen { max-width: 760px; }
   .service-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-  .continue-bar { max-width: 760px; }
+  .continue-bar { max-width: 720px; }
   .modal-box { max-width: 560px; }
 }
 
@@ -106,7 +106,8 @@
   .bk-card .name { font-size: 24px; }
   .bk-card .meta { font-size: 15px; }
   .bk-card .price { font-size: 25px; }
-  .continue-bar { padding: 38px 72px 56px; }
+  /* O botão deve acompanhar exatamente a largura interna dos cards de serviço. */
+  .continue-bar { max-width: 900px; padding: 38px 72px 56px; }
   .continue-bar .btn-primary-gold { min-height: 56px; font-size: 15px; }
   .calendar-wrap { font-size: 16px; }
   .cal-month .label { font-size: 28px; }
