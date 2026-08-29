@@ -89,7 +89,15 @@
   .screen { max-width: 760px; }
   .service-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
   .continue-bar { max-width: 720px; }
-  #screen-booking-service .continue-bar { width: 100%; max-width: 720px; }
+  #screen-booking-service .service-list,
+  #screen-booking-service .continue-bar {
+    width: 100%;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
   #screen-booking-service .continue-bar .btn-primary-gold { display: block; width: 100%; max-width: none; }
   .modal-box { max-width: 560px; }
 }
@@ -110,7 +118,15 @@
   .bk-card .price { font-size: 25px; }
   /* O botão deve acompanhar exatamente a largura interna dos cards de serviço. */
   .continue-bar { max-width: 900px; padding: 38px 72px 56px; }
-  #screen-booking-service .continue-bar { width: 100%; max-width: 900px; }
+  #screen-booking-service .service-list,
+  #screen-booking-service .continue-bar {
+    width: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 72px;
+    padding-right: 72px;
+  }
   #screen-booking-service .continue-bar .btn-primary-gold { display: block; width: 100%; max-width: none; }
   .continue-bar .btn-primary-gold { min-height: 56px; font-size: 15px; }
   .calendar-wrap { font-size: 16px; }
