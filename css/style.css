@@ -2,6 +2,7 @@ html{ scroll-behavior:smooth; }
   :root{
     --carvao:#2E2E2B;
     --off-white:#F1F1F1;
+    --branco:#FFFFFF;
     --dourado:#CBA339;
     --verde:#4B4D39;
     --marrom:#744032;
@@ -12,7 +13,7 @@ html{ scroll-behavior:smooth; }
   *{box-sizing:border-box; margin:0; padding:0;}
 
   body{
-    background:var(--carvao);
+    background:var(--branco);
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -25,7 +26,7 @@ html{ scroll-behavior:smooth; }
     left:0;
     width:100%;
     height:var(--navbar-h);
-    background:var(--carvao);
+    background:var(--branco);
     z-index:1000;
     container-type:inline-size;
   }
@@ -35,7 +36,7 @@ html{ scroll-behavior:smooth; }
     position:absolute;
     top:58%;
     transform:translateY(-50%);
-    color:var(--creme);
+    color:var(--carvao);
     font-family:'Josefin Sans', sans-serif;
     font-weight:400;
     font-size:2.9cqw;
@@ -158,7 +159,7 @@ html{ scroll-behavior:smooth; }
     max-width:560px;
     aspect-ratio:440/858.293;
     margin-top:var(--navbar-h);
-    background:var(--carvao);
+    background:var(--branco);
     overflow:hidden;
     container-type:inline-size;
   }
@@ -174,7 +175,7 @@ html{ scroll-behavior:smooth; }
     top:2%;
     width:80%;
     height:13.111%;
-    color:var(--off-white);
+    color:var(--carvao);
     font-family:'Baskervville', serif;
     font-weight:400;
     font-size:14.5cqw;
@@ -227,8 +228,8 @@ html{ scroll-behavior:smooth; }
     width:34.811%;
     height:5.243%;
     background:transparent;
-    color:var(--off-white);
-    border:1px solid var(--off-white);
+    color:var(--carvao);
+    border:1px solid var(--carvao);
     border-radius:2px;
     font-family:'Josefin Sans', sans-serif;
     font-weight:700;
@@ -257,7 +258,7 @@ html{ scroll-behavior:smooth; }
     position:relative;
     width:100%;
     max-width:560px;
-    background:var(--carvao);
+    background:var(--branco);
     container-type:inline-size;
     padding-top:21.734cqw;
     padding-bottom:10cqw;
@@ -268,7 +269,7 @@ html{ scroll-behavior:smooth; }
   .services__eyebrow{
     margin-left:10%;
     width:22.947%;
-    color:var(--off-white);
+    color:var(--carvao);
     font-family:'Josefin Sans', sans-serif;
     font-weight:300;
     font-size:3.030cqw;
@@ -282,7 +283,7 @@ html{ scroll-behavior:smooth; }
     margin-top:4.5cqw;
     width:86.955%;
     height:1px;
-    background:rgba(241,241,241,0.25);
+    background:rgba(46,46,43,0.25);
     transform:scaleY(0.5);
     transform-origin:top;
   }
@@ -291,7 +292,7 @@ html{ scroll-behavior:smooth; }
     margin-left:9.962%;
     margin-top:12.894cqw;
     width:73.917%;
-    color:var(--off-white);
+    color:var(--carvao);
     font-family:'EB Garamond', serif;
     font-weight:400;
     font-size:5.682cqw;
@@ -304,7 +305,7 @@ html{ scroll-behavior:smooth; }
     margin-left:9.962%;
     margin-top:2.8cqw;
     width:45.098%;
-    color:var(--off-white);
+    color:var(--carvao);
     font-family:'Josefin Sans', sans-serif;
     font-weight:400;
     font-size:3.030cqw;
@@ -439,13 +440,13 @@ html{ scroll-behavior:smooth; }
     width:1.8cqw;
     height:1.8cqw;
     border-radius:50%;
-    border:1px solid var(--off-white);
+    border:1px solid var(--carvao);
     background:transparent;
     padding:0;
     cursor:pointer;
   }
   .dot.is-active{
-    background:var(--off-white);
+    background:var(--carvao);
   }
 
   .services a:focus-visible,
@@ -463,7 +464,7 @@ html{ scroll-behavior:smooth; }
     width:100%;
     max-width:560px;
     aspect-ratio:440/956;
-    background:var(--carvao);
+    background:var(--branco);
     container-type:inline-size;
     overflow:hidden;
   }
@@ -474,7 +475,7 @@ html{ scroll-behavior:smooth; }
     top:22.947cqw;
     left:10cqw;
     width:22.947cqw;
-    color:var(--off-white);
+    color:var(--carvao);
     font-family:'Josefin Sans', sans-serif;
     font-weight:300;
     font-size:3.030cqw;
@@ -489,7 +490,7 @@ html{ scroll-behavior:smooth; }
     left:6.523cqw;
     width:86.955cqw;
     height:1px;
-    background:rgba(241,241,241,0.25);
+    background:rgba(46,46,43,0.25);
     transform:scaleY(0.5);
     transform-origin:top;
   }
@@ -499,7 +500,7 @@ html{ scroll-behavior:smooth; }
     top:36.871cqw;
     left:10cqw;
     width:80cqw;
-    color:var(--off-white);
+    color:var(--carvao);
     font-family:'EB Garamond', serif;
     font-weight:400;
     font-size:5.682cqw;
@@ -513,7 +514,7 @@ html{ scroll-behavior:smooth; }
     top:50.045cqw;
     left:10cqw;
     width:48.811cqw;
-    color:var(--off-white);
+    color:var(--carvao);
     font-family:'Josefin Sans', sans-serif;
     font-weight:400;
     font-size:3.030cqw;
@@ -555,7 +556,7 @@ html{ scroll-behavior:smooth; }
     width:100%;
     max-width:560px;
     aspect-ratio:440/956;
-    background:var(--carvao);
+    background:var(--branco);
     container-type:inline-size;
     overflow:hidden;
     margin:0 auto;
@@ -567,7 +568,7 @@ html{ scroll-behavior:smooth; }
     top:21.735cqw;
     left:10cqw;
     width:22.947cqw;
-    color:var(--off-white);
+    color:var(--carvao);
     font-family:'Josefin Sans', sans-serif;
     font-weight:300;
     font-size:3.030cqw;
@@ -581,7 +582,7 @@ html{ scroll-behavior:smooth; }
     left:6.523cqw;
     width:86.955cqw;
     height:1px;
-    background:rgba(241,241,241,0.12);
+    background:rgba(46,46,43,0.12);
     transform:scaleY(0.5);
     transform-origin:top;
   }
@@ -593,7 +594,7 @@ html{ scroll-behavior:smooth; }
     top:42.477cqw;
     left:9.962cqw;
     width:83.515cqw;
-    color:var(--off-white);
+    color:var(--carvao);
     font-family:'EB Garamond', serif;
     font-weight:400;
     font-size:5.682cqw;
@@ -607,7 +608,7 @@ html{ scroll-behavior:smooth; }
     top:50.811cqw;
     left:9.962cqw;
     width:52.091cqw;
-    color:var(--off-white);
+    color:var(--carvao);
     font-family:'Josefin Sans', sans-serif;
     font-weight:400;
     font-size:3.030cqw;
@@ -634,7 +635,7 @@ html{ scroll-behavior:smooth; }
   .cuidado__name{
     position:absolute;
     left:46.970cqw;
-    color:var(--off-white);
+    color:var(--carvao);
     font-family:'EB Garamond', serif;
     font-weight:700;
     font-size:3.409cqw;
@@ -648,7 +649,7 @@ html{ scroll-behavior:smooth; }
   .cuidado__underline{
     position:absolute;
     height:1px;
-    background:rgba(241,241,241,0.45);
+    background:rgba(46,46,43,0.45);
     transform:scaleY(0.5);
     transform-origin:top;
   }
@@ -657,7 +658,7 @@ html{ scroll-behavior:smooth; }
     position:absolute;
     left:46.970cqw;
     width:39.856cqw;
-    color:var(--off-white);
+    color:var(--carvao);
     font-family:'Josefin Sans', sans-serif;
     font-weight:400;
     font-size:3.030cqw;
@@ -712,7 +713,7 @@ html{ scroll-behavior:smooth; }
     top:198cqw;
     left:9.962cqw;
     width:80cqw;
-    color:var(--off-white);
+    color:var(--carvao);
     font-family:'Josefin Sans', sans-serif;
     font-weight:400;
     font-size:2.7cqw;
