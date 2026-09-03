@@ -12,7 +12,7 @@
 <style>
   /* Forca o fluxo a ser visivel e nao fixo na pagina dedicada */
   #booking-flow-root { display: block !important; position: static !important; overflow-y: visible !important; inset: auto !important; z-index: auto !important; }
-  body { background: #2E2E2B; } /* --carvao */
+  body { background: #FFFFFF; } /* --branco */
 </style>
 </head>
 <body>
@@ -119,6 +119,12 @@
           <span id="prevMonthBtn" onclick="changeMonth(-1)">‹</span>
           <span id="nextMonthBtn" onclick="changeMonth(1)">›</span>
         </div>
+      </div>
+      <div class="cal-legend">
+        <span>Disponibilidade:</span>
+        <span class="cal-legend__item"><span class="cal-legend__dot" style="background:var(--avail-alta);"></span>7–5</span>
+        <span class="cal-legend__item"><span class="cal-legend__dot" style="background:var(--avail-media);"></span>4–3</span>
+        <span class="cal-legend__item"><span class="cal-legend__dot" style="background:var(--avail-baixa);"></span>2–1</span>
       </div>
       <div class="cal-grid" id="calGrid">
         <div class="cal-dow">D</div><div class="cal-dow">S</div><div class="cal-dow">T</div><div class="cal-dow">Q</div><div class="cal-dow">Q</div><div class="cal-dow">S</div><div class="cal-dow">S</div>

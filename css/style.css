@@ -798,6 +798,9 @@ html{ scroll-behavior:smooth; }
     --text-soft: rgba(46,46,43,0.55);
     --ui-font: 'Josefin Sans';
     --serif-font: 'EB Garamond';
+    --avail-alta: #5FAE5D;
+    --avail-media: #FAD949;
+    --avail-baixa: #CF9544;
   }
 
   #booking-flow-root {
@@ -1209,8 +1212,10 @@ html{ scroll-behavior:smooth; }
   .cal-day {
     aspect-ratio: 1;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 3px;
     font-size: 13px;
     border-radius: 50%;
     cursor: pointer;
@@ -1224,9 +1229,44 @@ html{ scroll-behavior:smooth; }
   .cal-day.available {
     background: rgba(75,77,57,0.08);
   }
+  .cal-day.full {
+    background: rgba(75,77,57,0.05);
+    color: rgba(46,46,43,0.4);
+  }
   .cal-day.selected {
     background: var(--gold);
     color: var(--dark);
+  }
+  .cal-day__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+  .cal-day__dot--alta { background: var(--avail-alta); }
+  .cal-day__dot--media { background: var(--avail-media); }
+  .cal-day__dot--baixa { background: var(--avail-baixa); }
+
+  .cal-legend {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 11px;
+    color: var(--text-soft);
+    font-family: var(--ui-font), sans-serif;
+    letter-spacing: 0.3px;
+    margin-bottom: 16px;
+  }
+  .cal-legend__item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .cal-legend__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
   }
 
   .time-label {
@@ -1352,6 +1392,7 @@ html{ scroll-behavior:smooth; }
 
   /* ---------- Dev nav (not part of real site, just to demo) ---------- */
   .dev-nav {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -1361,7 +1402,6 @@ html{ scroll-behavior:smooth; }
     font-size: 11px;
     letter-spacing: 1px;
     padding: 10px 14px;
-    display: flex;
     gap: 10px;
     z-index: 1000;
     overflow-x: auto;

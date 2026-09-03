@@ -266,6 +266,26 @@ const screens = ['booking-service', 'booking-calendar', 'booking-confirm', 'book
     return slots;
   }
 
+  // ---------- Indicador de disponibilidade no calendário (DADO SIMULADO) ----------
+  // Puramente decorativo: não há endpoint que devolva a contagem do mês inteiro
+  // ainda (só existe /availability por dia único, usado ao abrir um dia). O
+  // clique sempre consulta o horário real via renderTimeSlots — a bolinha/cor
+  // aqui pode não bater com a disponibilidade real até esse endpoint existir.
+  function getMockAvailability(dateObj) {
+    let seed = dateObj.getFullYear() * 10000 + (dateObj.getMonth() + 1) * 100 + dateObj.getDate();
+    seed = (seed ^ (seed << 13)) >>> 0;
+    seed = (seed ^ (seed >>> 17)) >>> 0;
+    seed = (seed ^ (seed << 5)) >>> 0;
+    return seed % 8; // 0–7
+  }
+
+  function getAvailabilityTier(count) {
+    if (count <= 0) return 'esgotado';
+    if (count >= 5) return 'alta';   // 7–5 horários livres
+    if (count >= 3) return 'media';  // 4–3
+    return 'baixa';                  // 2–1
+  }
+
   function renderCalendar() {
     const grid = document.getElementById('calGrid');
     grid.querySelectorAll('.cal-day').forEach(el => el.remove());
@@ -288,15 +308,29 @@ const screens = ['booking-service', 'booking-calendar', 'booking-confirm', 'book
       const dateObj = new Date(year, month, d);
       const dow = dateObj.getDay();
       const cell = document.createElement('div');
-      cell.textContent = d;
       cell.dataset.date = getDateKey(dateObj);
       // O atendimento começa a partir de amanhã; o dia atual não é exibido como disponível.
       const isPast = dateObj <= today;
       const isSunday = dow === 0;
       if (isPast || isSunday) {
         cell.className = 'cal-day disabled';
+        cell.textContent = d;
       } else {
         cell.className = 'cal-day available';
+        const numSpan = document.createElement('span');
+        numSpan.className = 'cal-day__num';
+        numSpan.textContent = d;
+        cell.appendChild(numSpan);
+        // Bolinha de disponibilidade é só decorativa (ver getMockAvailability); o dia continua
+        // clicável e mostra o horário real ao selecionar, independente da cor mostrada aqui.
+        const tier = getAvailabilityTier(getMockAvailability(dateObj));
+        if (tier === 'esgotado') {
+          cell.classList.add('full');
+        } else {
+          const dot = document.createElement('span');
+          dot.className = 'cal-day__dot cal-day__dot--' + tier;
+          cell.appendChild(dot);
+        }
         cell.onclick = () => selectDay(cell, dateObj);
       }
       grid.appendChild(cell);
@@ -364,6 +398,8 @@ const screens = ['booking-service', 'booking-calendar', 'booking-confirm', 'book
     el.classList.add('selected');
     state.dateObj = dateObj;
     state.time = null;
+    document.getElementById('continueBtn2').disabled = true;
+    document.getElementById('continueBtn2').style.opacity = '0.4';
     renderTimeSlots(dateObj);
     checkStep2();
     document.getElementById('timeGrid').scrollIntoView({ behavior: 'smooth', block: 'center' });
