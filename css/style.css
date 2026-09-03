@@ -798,6 +798,9 @@ html{ scroll-behavior:smooth; }
     --text-soft: rgba(46,46,43,0.55);
     --ui-font: 'Josefin Sans';
     --serif-font: 'EB Garamond';
+    --avail-alta: #7FA377;
+    --avail-media: #D9B85C;
+    --avail-baixa: #B8695C;
   }
 
   #booking-flow-root {
@@ -1209,9 +1212,12 @@ html{ scroll-behavior:smooth; }
   .cal-day {
     aspect-ratio: 1;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 13px;
+    gap: 2px;
+    font-size: 12px;
+    line-height: 1;
     border-radius: 50%;
     cursor: pointer;
     color: var(--dark);
@@ -1224,9 +1230,39 @@ html{ scroll-behavior:smooth; }
   .cal-day.available {
     background: rgba(75,77,57,0.08);
   }
+  .cal-day.full {
+    background: rgba(75,77,57,0.05);
+    color: rgba(46,46,43,0.4);
+  }
   .cal-day.selected {
-    background: var(--gold);
+    background: rgba(203,163,57,0.10);
+    border: 1px solid var(--gold);
     color: var(--dark);
+  }
+  .cal-day__dot {
+    height: 4px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .cal-day__dot--alta { width: 12px; background: var(--avail-alta); }
+  .cal-day__dot--media { width: 8px; background: var(--avail-media); }
+  .cal-day__dot--baixa { width: 4px; background: var(--avail-baixa); }
+
+  .cal-legend {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 11px;
+    color: var(--text-soft);
+    font-family: var(--ui-font), sans-serif;
+    letter-spacing: 0.3px;
+    margin-bottom: 16px;
+  }
+  .cal-legend__item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
   }
 
   .time-label {
@@ -1352,6 +1388,7 @@ html{ scroll-behavior:smooth; }
 
   /* ---------- Dev nav (not part of real site, just to demo) ---------- */
   .dev-nav {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -1361,7 +1398,6 @@ html{ scroll-behavior:smooth; }
     font-size: 11px;
     letter-spacing: 1px;
     padding: 10px 14px;
-    display: flex;
     gap: 10px;
     z-index: 1000;
     overflow-x: auto;
