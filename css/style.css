@@ -1235,17 +1235,18 @@ html{ scroll-behavior:smooth; }
     color: rgba(46,46,43,0.4);
   }
   .cal-day.selected {
-    background: var(--gold);
+    background: rgba(203,163,57,0.12);
+    border: 2px solid var(--gold);
     color: var(--dark);
   }
   .cal-day__dot {
-    width: 6px;
     height: 6px;
-    border-radius: 50%;
+    border-radius: 3px;
+    flex-shrink: 0;
   }
-  .cal-day__dot--alta { background: var(--avail-alta); }
-  .cal-day__dot--media { background: var(--avail-media); }
-  .cal-day__dot--baixa { background: var(--avail-baixa); }
+  .cal-day__dot--alta { width: 16px; background: var(--avail-alta); }
+  .cal-day__dot--media { width: 11px; background: var(--avail-media); }
+  .cal-day__dot--baixa { width: 6px; background: var(--avail-baixa); }
 
   .cal-legend {
     display: flex;
@@ -1262,12 +1263,6 @@ html{ scroll-behavior:smooth; }
     display: flex;
     align-items: center;
     gap: 5px;
-  }
-  .cal-legend__dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    flex-shrink: 0;
   }
 
   .time-label {
